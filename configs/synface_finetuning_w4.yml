@@ -1,6 +1,6 @@
 ## train synface
 ## trainer
-checkpoint_dir: results/synface_finetuning_w6
+checkpoint_dir: results/synface_finetuning_w4
 save_checkpoint_freq: 500
 keep_num_checkpoint: 2
 use_logger: true

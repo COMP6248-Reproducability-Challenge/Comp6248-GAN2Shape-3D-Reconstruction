@@ -1,5 +1,5 @@
-EXP=synface_finetuning_w6
-CONFIG=synface_finetuning_w6
+EXP=synface_pretrain_w4
+CONFIG=synface_pretrain_w4
 GPUS=4
 PORT=${PORT:-29579}
 
