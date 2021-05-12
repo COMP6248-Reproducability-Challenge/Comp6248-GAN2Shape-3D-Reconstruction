@@ -1,2 +1,2 @@
 # COMP6248-Reproducibility Challenge
-## DO UNSUPERVISED 3D SHAPE RECONSTRUCTION FROM 2D IMAGE GANs
+## Do 2D GANs Know 3D Shape? Unsupervised 3D Shape Reconstruction from 2D Image GANs
