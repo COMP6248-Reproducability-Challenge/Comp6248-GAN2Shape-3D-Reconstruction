@@ -1,2 +1,2 @@
-# comp6248-gan2shape
-
+# COMP6248-Reproducibility Challenge
+## COMP6248-Reproducibility Challenge - UNSUPERVISED 3D SHAPE RECONSTRUCTION FROM 2D IMAGE GANs
