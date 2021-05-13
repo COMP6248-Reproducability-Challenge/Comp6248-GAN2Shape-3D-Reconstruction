@@ -57,6 +57,7 @@ class GAN2Shape():
         self.view_scale = cfgs.get('view_scale', 1.0)
         self.collect_iters = cfgs.get('collect_iters', 100)
         self.rand_light = cfgs.get('rand_light', [-1,1,-0.2,0.8,-0.1,0.6,-0.6])
+        self.shape_prior = cfgs.get('shape_prior', "origin")
         # optimization parameters
         self.batchsize = cfgs.get('batchsize', 8)
         self.lr = cfgs.get('lr', 1e-4)
@@ -307,35 +308,59 @@ class GAN2Shape():
         with torch.no_grad():
             h, w = self.image_size, self.image_size
             c_x, c_y = w / 2, h / 2
-
- #           mask = self.input_mask[0, 0] >= 0.7
- #           max_y, min_y, max_x, min_x = utils.get_mask_range(mask)
- #           if self.category == 'synface':
- #               min_y = min_y - (max_y-min_y) / 6
- #           elif self.category == 'face':  # celeba
- #               max_y = h - 1
- #               width = max_x - min_x
- #               max_x -= width / 12
- #               min_x += width / 12
- #           elif self.category in ['car', 'church']:
- #               max_y = max_y + (max_y - min_y) / 6
- #           r_pixel = (max_x - min_x) / 2
- #           ratio = (max_y - min_y) / (max_x - min_x)
- #           c_x = (max_x + min_x) / 2
- #           c_y = (max_y + min_y) / 2
- #           radius = 0.4
             near = self.cfgs.get('prior_near', 0.91)
             far = self.cfgs.get('prior_far', 1.02)
-
             ellipsoid = torch.Tensor(1,h,w).fill_(far)
-#            i, j = torch.meshgrid(torch.linspace(0, w-1, w), torch.linspace(0, h-1, h))
-#            i = (i - h/2) / ratio + h/2
-#            temp = math.sqrt(radius**2 - (radius - (far - near))**2)
-#            dist = torch.sqrt((i - c_y)**2 + (j - c_x)**2)
-#            area = dist <= r_pixel
-#            dist_rescale = dist / r_pixel * temp
-#            depth = radius - torch.sqrt(torch.abs(radius ** 2 - dist_rescale ** 2)) + near
-#            ellipsoid[0, area] = depth[area]
+            if self.shape_prior == "origin":
+                mask = self.input_mask[0, 0] >= 0.7
+                max_y, min_y, max_x, min_x = utils.get_mask_range(mask)
+                if self.category == 'synface':
+                    min_y = min_y - (max_y-min_y) / 6
+                elif self.category == 'face':  # celeba
+                    max_y = h - 1
+                    width = max_x - min_x
+                    max_x -= width / 12
+                    min_x += width / 12
+                elif self.category in ['car', 'church']:
+                    max_y = max_y + (max_y - min_y) / 6
+                r_pixel = (max_x - min_x) / 2
+                ratio = (max_y - min_y) / (max_x - min_x)
+                c_x = (max_x + min_x) / 2
+                c_y = (max_y + min_y) / 2
+                radius = 0.4
+                i, j = torch.meshgrid(torch.linspace(0, w-1, w), torch.linspace(0, h-1, h))
+                i = (i - h/2) / ratio + h/2
+                temp = math.sqrt(radius**2 - (radius - (far - near))**2)
+                dist = torch.sqrt((i - c_y)**2 + (j - c_x)**2)
+                area = dist <= r_pixel
+                dist_rescale = dist / r_pixel * temp
+                depth = radius - torch.sqrt(torch.abs(radius ** 2 - dist_rescale ** 2)) + near
+                ellipsoid[0, area] = depth[area]
+            elif self.shape_prior =="w4":
+                mask = self.input_mask[0, 0] >= 0.7
+                max_y, min_y, max_x, min_x = utils.get_mask_range(mask)
+                if self.category == 'synface':
+                    min_y = (min_y - (max_y-min_y) / 6) + w/4
+                elif self.category == 'face':  # celeba
+                    max_y = h - 1
+                    width = max_x - min_x
+                    max_x -= width / 12
+                    min_x += width / 12
+                elif self.category in ['car', 'church']:
+                    max_y = max_y + (max_y - min_y) / 6
+                r_pixel = (max_x - min_x) / 2
+                ratio = (max_y - min_y) / (max_x - min_x)
+                c_x = (max_x + min_x) / 2
+                c_y = (max_y + min_y) / 2
+                radius = 0.4
+                i, j = torch.meshgrid(torch.linspace(0, w-1, w), torch.linspace(0, h-1, h))
+                i = (i - h/2) / ratio + h/2
+                temp = math.sqrt(radius**2 - (radius - (far - near))**2)
+                dist = torch.sqrt((i - c_y)**2 + (j - c_x)**2)
+                area = dist <= r_pixel
+                dist_rescale = dist / r_pixel * temp
+                depth = radius - torch.sqrt(torch.abs(radius ** 2 - dist_rescale ** 2)) + near
+                ellipsoid[0, area] = depth[area]
             ellipsoid = ellipsoid.cuda()
             return ellipsoid
 
