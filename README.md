@@ -7,6 +7,12 @@
 
 * Eu Jin Ong
 
+### Environment
+Python = 3.6
+Pytorch = 1.2
+Torchvision = 0.4
+Neural Renderer
+
 ### Resources
 * Reproduced from ICLR 2021 Conference Paper: https://openreview.net/forum?id=FGqiDsBUKL0
 
