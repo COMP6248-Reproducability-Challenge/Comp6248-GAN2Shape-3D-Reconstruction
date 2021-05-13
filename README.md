@@ -13,4 +13,4 @@
 * Github Page: https://github.com/XingangPan/GAN2Shape
 
 ## Requirements & steps
-The requirements and steps to run the code are shown in the **steps.txt** file in the repository.
+The requirements and steps to run the code can be found in the **steps.txt** file in the repository.
