@@ -9,7 +9,7 @@
 
 ### Environment
 * Python = 3.6
-* Pytorch = 1.2
+* PyTorch = 1.2
 * Torchvision = 0.4
 * Neural Renderer
 
