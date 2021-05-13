@@ -1,0 +1,40 @@
+################################################## Requirements ####################################################
+
+#Python = 3.6
+pip install https://download.pytorch.org/whl/cu100/torch-1.2.0-cp36-cp36m-manylinux1_x86_64.whl
+
+#Pytorch
+pip install https://download.pytorch.org/whl/cu100/torchvision-0.4.0-cp36-cp36m-manylinux1_x86_64.whl
+
+#GCC-Compiler
+conda install gxx_linux-64=7.3
+
+#Neural renderer (steps to install)
+i) git clone https://github.com/daniilidis-group/neural_renderer.git
+
+ii) cd neural_renderer
+
+iii) pip install ipython
+
+iv) pip install tqdm
+
+v) python setup.py install 
+
+#mmcv 
+pip install mmcv
+
+#other dependencies
+conda install -c conda-forge scikit-image matplotlib opencv pyyaml tensorboardX
+
+#Datasets and Pretrained weights acquirement
+sh scripts/download.sh
+
+#Running the training process [requires additional computational power (2-4 GPUs would be required)]
+i) sh scripts/run_car.sh  (car dataset)
+ii) sh scripts/run_church.sh (church dataset)
+
+Pre-training and Finetuning scripts of synface/BFM dataset can be run with the following command:
+iii) eg. sh scripts/run_synface-finetuning_flat.sh
+
+
+
