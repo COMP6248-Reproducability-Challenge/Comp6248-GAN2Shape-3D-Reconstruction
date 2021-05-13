@@ -12,25 +12,5 @@
 
 * Github Page: https://github.com/XingangPan/GAN2Shape
 
-## Requirements
-* **python = 3.6**
-* **pytorch = 1.2**
-
-* **neural_renderer**
-```
-git clone https://github.com/daniilidis-group/neural_renderer
-```
-* **mmcv**
-```
-pip install mmcv
-```
-
-* **other required dependencies**
-```
-conda install -c conda-forge scikit-image matplotlib opencv pyyaml tensorboardX
-```
-
-## Pretrained weights and Dataset Acquirement
-```
-sh scripts/download.sh
-```
+## Requirements & steps
+The requirements and steps to run the code are shown in the **steps.txt** file in the repository.
